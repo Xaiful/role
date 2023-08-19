@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Laravel - Role - Permission</title>
+    <title>BMS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
 
@@ -56,7 +56,7 @@
                                 <div class="widget-content-left">
                                     <div class="btn-group">
                                         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
-                                            <img width="42" class="rounded-circle" src="{{asset('backend/images/avatars/towhid.png')}}" alt="">
+                                            <img width="42" class="rounded-circle" src="{{asset('backend/images/avatars/avatar.jpg')}}" alt="">
                                         </a>
                                         <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
                                             <div class="dropdown-menu-header">
@@ -66,7 +66,7 @@
                                                         <div class="widget-content p-0">
                                                             <div class="widget-content-wrapper">
                                                                 <div class="widget-content-left mr-3">
-                                                                    <img width="42" class="rounded-circle" src="{{asset('backend/images/avatars/towhid.png')}}" alt="{{auth()->user()->name}}">
+                                                                    <img width="42" class="rounded-circle" src="{{asset('backend/images/avatars/avatar.jpg')}}" alt="{{auth()->user()->name}}">
                                                                 </div>
                                                                 <div class="widget-content-left">
                                                                     <div class="widget-heading">{{auth()->user()->name}}</div>
@@ -156,6 +156,76 @@
                             <li>
                                 <a href="{{route('users.index')}}">
                                     <i class="metismenu-icon pe-7s-users"></i>Users
+                                </a>
+                            </li>
+                            @endcan
+
+                            @can('units-list')
+                            <li>
+                                <a href="{{route('units.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>Unites
+                                </a>
+                            </li>
+                            @endcan
+                            @can('categories-list')
+                            <li>
+                                <a href="{{route('categories.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>Category
+                                </a>
+                            </li>
+                            @endcan
+                            @can('subcategories-list')
+                            <li>
+                                <a href="{{route('subcategories.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>SubCategory
+                                </a>
+                            </li>
+                            @endcan
+
+                            @can('raw-materials-list')
+                            <li>
+                                <a href="{{route('rawmaterials.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>Raw_materials
+                                </a>
+                            </li>
+                            @endcan
+
+                            @can('rawmaterialshops-list')
+                            <li>
+                                <a href="{{route('rawmaterialshops.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>RawmaterialShops
+                                </a>
+                            </li>
+                            @endcan
+
+                            @can('products-list')
+                            <li>
+                                <a href="{{route('products.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>Products List
+                                </a>
+                            </li>
+                            @endcan
+
+                            @can('devisions-list')
+                            <li>
+                                <a href="{{route('devisions.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>Devisions List
+                                </a>
+                            </li>
+                            @endcan
+
+                            @can('districts-list')
+                            <li>
+                                <a href="{{route('districts.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>Districts List
+                                </a>
+                            </li>
+                            @endcan
+
+                            @can('subdistricts-list')
+                            <li>
+                                <a href="{{route('subdistricts.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>SubDistricts List
                                 </a>
                             </li>
                             @endcan
