@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Area;
+use App\Models\Devision;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -24,7 +26,6 @@ class User extends Authenticatable
         'password',
     ];
 
- 
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -43,4 +44,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function devisions()
+    {
+        return $this->belongsToMany(Devision::class, 'roles_devisions', 'user_id', 'devision_id');
+    }
+
+    public function districts()
+    {
+        return $this->belongsToMany(District::class, 'roles_devisions', 'user_id', 'district_id');
+    }
+    public function subDistricts()
+    {
+        return $this->belongsToMany(SubDistrict::class, 'roles_devisions', 'user_id','sub_district_id');
+    } 
+    public function areas()
+    {
+        return $this->belongsToMany(Area::class, 'roles_devisions', 'user_id','area_id');
+    }
 }

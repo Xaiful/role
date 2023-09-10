@@ -52,7 +52,7 @@ class SubDistrictController extends Controller
         ]);
     //dd($subcategory);
         if(!empty($subDistrict)){
-            return redirect()->route('subdistricts.index')->with('success' ,'Your SubDistrict has been added');
+            return redirect()->route('subdistricts.subdistricts')->with('success' ,'Your SubDistrict has been added');
             }
             return redirect()->back()->withInput();
     }

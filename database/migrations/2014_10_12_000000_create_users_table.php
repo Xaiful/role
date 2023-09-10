@@ -19,6 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            // $table->foreignId('devision_id')->constrained('devisions')->nullable();
+            // $table->foreignId('district_id')->constrained('districts')->nullable();
+            // $table->foreignId('sub_district_id')->constrained('sub_districts')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

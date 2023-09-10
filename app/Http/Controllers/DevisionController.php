@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Devision;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreDevisionRequest;
 use App\Http\Requests\UpdateDevisionRequest;
-use App\Models\Devision;
 
 class DevisionController extends Controller
 {
@@ -12,6 +14,7 @@ class DevisionController extends Controller
     {
          $this->middleware('permission:devisions-list', ['only' => ['index','show']]);
          $this->middleware('permission:devisions-create', ['only' => ['create','store']]);
+         $this->middleware('permission:devisions-districts', ['only' => ['showDevisionDistricts','show']]);
          $this->middleware('permission:devisions-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:devisions-delete', ['only' => ['destroy']]);
     }
@@ -22,10 +25,24 @@ class DevisionController extends Controller
      */
     public function index()
     {
-        $data['devisions'] = Devision::all();
+        $data['devisions'] = Devision::whereIn('id', function ($query) {
+            $query->select('devision_id')
+                ->from('roles_devisions')
+                ->whereIn('user_id', [Auth::user()->id]);
+                
+        })->get();
+        
+        $data['user'] = Auth::user();
         return view('backend.devisions.index',$data);
+
     }
 
+    public function devision()
+    {
+        $data['devisions'] = Devision::all();
+        return view('backend.devisions.devisions',$data);
+
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -48,7 +65,7 @@ class DevisionController extends Controller
             'name'=>$request->name,
         ]);
         if(!empty($devision)){
-            return redirect()->route('devisions.index')->with('success' ,'Your Devisions has been added');
+            return redirect()->route('devisions.devisions')->with('success' ,'Your Devisions has been added');
             }
             return redirect()->back()->withInput();
     }
@@ -59,11 +76,21 @@ class DevisionController extends Controller
      * @param  \App\Models\Devision  $devision
      * @return \Illuminate\Http\Response
      */
+    
     public function show(Devision $devision)
     {
         //
     }
 
+    public function showDevisionDistricts(Devision $devision)
+    {   
+        $users = Auth::user();
+        $districts = $devision->districts()->where('devision_id', $devision->id)->get();
+
+        // $districts = $devision->districts;
+        // $users = User::all();
+        return view('backend.devisions.districts',compact('users','districts','devision') );
+    }
     /**
      * Show the form for editing the specified resource.
      *

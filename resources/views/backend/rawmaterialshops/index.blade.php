@@ -1,10 +1,11 @@
 @extends('backend.layouts.app')
 @section('content')
     <div class="main-card mb-3 card">
-        <div class="app-page-title">
-            <a class="btn btn-lg btn-transition btn btn-outline-success" href="{{route('rawmaterialshops.create')}}">
+        <div class="card-header">
+            <a class="btn btn-sm btn-primary" href="{{route('rawmaterialshops.create')}}">
                 Create 
             </a>
+        </div>    
         <div class="card-body">
             <table id="example" class="table table-hover table-striped table-bordered">
                 <thead>
@@ -17,7 +18,9 @@
                     @forelse ($rawMaterialsShops as $rawMaterialsShop)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{$rawMaterialsShop->shopeName}}</td>
+                        <td>
+                            <a href="{{ route('rawmaterialShop.list', $rawMaterialsShop->id) }}">{{ $rawMaterialsShop->shopeName }}</a>
+                        </td>
                         <td>{{$rawMaterialsShop->address}}</td>
                         <td>{{$rawMaterialsShop->phone}}</td>
                         <td>

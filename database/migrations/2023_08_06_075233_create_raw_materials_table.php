@@ -17,7 +17,7 @@ class CreateRawMaterialsTable extends Migration
             $table->id();
             $table->string('name');
             $table->float('quantity')->default(0);
-            $table->foreignId('subcategory_id')->constrained('subcategories');
+            $table->foreignId('subcategory_id')->nullable()->constrained('subcategories');
             // $table->foreignId('raw_materials_shop_id')->constrained('raw_materials_shops');
             $table->foreignId('unit_id')->constrained('units');
             $table->integer('memo_no');

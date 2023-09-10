@@ -120,6 +120,7 @@ class RoleSeeder extends Seeder
                     'devisions-create',
                     'devisions-edit',
                     'devisions-delete',
+                    'devisions-districts',
                 ]
             ],
 
@@ -130,6 +131,8 @@ class RoleSeeder extends Seeder
                     'districts-create',
                     'districts-edit',
                     'districts-delete',
+                    'districts-districts',
+
                 ]
             ],
 
@@ -140,6 +143,25 @@ class RoleSeeder extends Seeder
                     'subdistricts-create',
                     'subdistricts-edit',
                     'subdistricts-delete',
+                    'subdistricts-subdistricts',
+                ]
+            ],
+            [
+                'group_name' => 'Warehouse',
+                'permissions' => [
+                    'warehouses-list',
+                    'warehouses-create',
+                    'warehouses-edit',
+                    'warehouses-delete',
+                ]
+            ],
+            [
+                'group_name' => 'area',
+                'permissions' => [
+                    'areas-list',
+                    'areas-create',
+                    'areas-edit',
+                    'areas-delete',
                 ]
             ],
         ];
@@ -150,6 +172,7 @@ class RoleSeeder extends Seeder
         $roleRSM = Role::create(['name' => 'RSM']);
         $roleASM = Role::create(['name' => 'ASM']);
         $roleSPO = Role::create(['name' => 'SPO']);
+        $roleASPO = Role::create(['name' => 'ASPO']);
 
         // Create and Assign Permissions
         for ($i = 0; $i < count($permissions); $i++) {

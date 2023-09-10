@@ -16,9 +16,8 @@ class RawMaterials extends Model
         'name',
         'memo_no',
         'unit_price',
-        'raw_materials_shop_id',
+        // 'raw_materials_shop_id',
         'quantity',
-        'subcategory_id',
         'unit_id',
     ];
 
@@ -34,10 +33,12 @@ class RawMaterials extends Model
     {
         return $this->belongsTo(Unit::class);
     }
-    public function rawmaterialShops()
+
+    public function rawMaterialShops()
     {
-        return $this->hasOne(RawMaterialsShop::class);
+        return $this->belongsToMany(RawMaterialsShop::class, 'raw_materials_raw_material_shop', 'raw_material_id', 'raw_materials_shop_id');
     }
+
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_raw_materials_pivot')

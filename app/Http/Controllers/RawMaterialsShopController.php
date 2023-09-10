@@ -61,13 +61,14 @@ class RawMaterialsShopController extends Controller
      * @param  \App\Models\RawMaterialsShop  $rawMaterialsShop
      * @return \Illuminate\Http\Response
      */
-    public function show(RawMaterialsShop $rawmaterialshop)
-    {
-        $rawmaterialshop->load('rawmaterials');
-        return view('backend.rawmaterialshops.show', $rawmaterialshop);
-    }
+   
 
-
+     public function show($rawMaterialsShop)
+     {
+         $data['rawMaterialsShop'] = RawMaterialsShop::findOrFail($rawMaterialsShop);
+         $data['rawmaterials'] = RawMaterials::get();
+         return view('backend.rawmaterialshops.show',$data);
+     }
 
     /**
      * Show the form for editing the specified resource.

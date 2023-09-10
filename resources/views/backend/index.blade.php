@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="col-md-6 col-xl-3">
+        <div class="col-md-6 col-xl-3">
             <div class="card mb-3 widget-chart widget-chart2 text-left card-btm-border card-shadow-danger border-danger">
                 <div class="widget-chat-wrapper-outer">
                     <div class="widget-chart-content pt-3 pl-3 pb-1">
@@ -75,7 +75,8 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
+        
     </div>
 </div>
 

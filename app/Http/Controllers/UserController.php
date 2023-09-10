@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\User;
+use App\Models\Devision;
+use App\Models\District;
+use App\Models\SubDistrict;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -24,7 +28,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data['users'] = User::all();
+        $data['devisions'] = Devision::all();
+        $data['districts'] = District::all();
+        $data['subDistricts'] = SubDistrict::all();
+        $data['areas'] = Area::pluck('name','id');
+        // $data['users'] = User::all();
+        $data['users'] = User::get();
+
         return view('backend.user.index',$data);
     }
 
@@ -35,6 +45,10 @@ class UserController extends Controller
      */
     public function create()
     {
+        $data['devisions'] = Devision::pluck('name','id');
+        $data['districts'] = District::pluck('name','id');
+        $data['subDistricts'] = SubDistrict::pluck('name','id');
+        $data['areas'] = Area::pluck('name','id');
         $data['roles'] = Role::all();
         $data['permissions'] = Permission::all();
         return view('backend.user.create',$data);
@@ -47,33 +61,65 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', 'min:8'],
-        ]);
+{
+    $validatedData = $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', 'confirmed', 'min:8'],
+        'role' => ['required'], // Add validation rule for role
+    ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'required',
-        ]);
+    $user = User::create([
+        'name' => $validatedData['name'],
+        'email' => $validatedData['email'],
+        'password' => Hash::make($validatedData['password']),
+    ]);
+    
+   
+    $role = Role::findByName($validatedData['role']);
+    $user->assignRole($role);
 
-        $user->assignRole($request->role);
-
-        // if($request->has('permissions')){
-        //     $user->givePermissionTo($request->permissions);
-        // }
-
-        if (!empty($user)) {
-            return redirect()->route('users.index');
-        }
-
-        return back();
-
+    if ($role->name === 'RSM') {
+        $user->devisions()->attach($request->input('devision_id'));
+    } elseif ($role->name === 'ASM') {
+        $user->districts()->attach($request->input('district_id'));
+    } elseif ($role->name === 'SPO') {
+        $user->subDistricts()->attach($request->input('sub_district_id'));
+    } elseif ($role->name === 'ASPO') {
+        $user->areas()->attach($request->input('area_id'));
     }
+    // $devisionId = $request->input('devision_id');
+    // if ($request->has('devision_id')) {
+    //     $devision = Devision::find($request->input('devision_id'));
+    //     if ($devision) {
+    //         $user->devisions()->attach($devision->id);
+    //     }
+    // } elseif ($request->has('new_devision')) {
+    //     $newDevision = Devision::create([
+    //         'name' => $request->new_devision,
+    //     ]);
+    //     if ($newDevision) {
+    //         $user->devisions()->attach($newDevision->id);
+    //     }
+    // }
+    
+    // Associate geographic areas based on the selected role
+    // if ($role->name === 'NSM') {
+    //     $devision = Devision::find($request->input('devision_id'));
+    //     $user->devisions()->attach($devision);
+    // } elseif ($role->name === 'RSM') {
+    //     $district = District::find($request->input('district_id'));
+    //     $user->districts()->attach($district);
+    // } elseif ($role->name === 'ASM') {
+    //     $subDistrict = SubDistrict::find($request->input('sub_district_id'));
+    //     $user->subDistricts()->attach($subDistrict);
+    // }
+    // dd($request);
+
+    // Redirect to the user index page
+    return redirect()->route('users.index')->with('success', 'User created successfully.');
+}
+
 
     /**
      * Display the specified resource.

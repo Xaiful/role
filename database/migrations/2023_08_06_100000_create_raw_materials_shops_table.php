@@ -18,7 +18,6 @@ class CreateRawMaterialsShopsTable extends Migration
             $table->string('shopeName');
             $table->string('address');
             $table->string('phone');
-            $table->foreignId('raw_materials_id')->constrained('raw_materials');
             $table->timestamps();
         });
     }

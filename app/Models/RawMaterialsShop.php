@@ -15,13 +15,12 @@ class RawMaterialsShop extends Model
         'phone',
         'rawmaterial_id'
     ];
-    public function rawmaterial()
-    {
-        return $this->belongsTo(RawMaterials::class);
-    }
+    
     public function rawMaterials()
-{
-    return $this->hasMany(RawMaterials::class);
-}
+    {
+        return $this->belongsToMany(RawMaterials::class, 'raw_materials_raw_material_shop', 'raw_materials_shop_id', 'raw_material_id');
+    }
+
+
 
 }

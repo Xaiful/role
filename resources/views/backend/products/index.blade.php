@@ -20,6 +20,7 @@
             <br>
                 
                 <a style="margin-right:5px" href="{{ route('products.create') }}" class="btn btn-sm btn-primary float-right">Add Medicine</a>
+                <a style="margin-right:5px" href="{{ route('products.send') }}" class="btn btn-sm btn-primary float-right">Warehouse</a>
                 
             </div>
             <div class="card-body">
@@ -29,7 +30,7 @@
                         <tr>
                             <th>Product</th>
                             <th>Description</th>
-                            <th>Raw-Materilas</th>
+                            <th>Unit</th>
                             <th>Quantity</th>
                         </tr>
                     </thead>
@@ -39,16 +40,10 @@
                             <tr>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->description }}</td>
-                                <td>
-                                    @foreach ($product->rawmaterials as $rawmaterial)
-                                        {{ $rawmaterial->name }}<br>
-                                    @endforeach
-                                </td>
-                                <td>
-                                    @foreach ($product->rawmaterials as $rawmaterial)
-                                        {{ $rawmaterial->quantity }}<br>
-                                    @endforeach
-                                </td>
+                                <td>{{$product->unit->name }}</td>
+                                
+                                <td>{{ $product->quantity }}</td>
+
                                 {{-- <td><a href="{{route('rawmaterialshops.show')}}">{{ $rawmaterial->rawmaterialShops->shopeName }}</a></td> --}}
                                 {{-- <td><a href="{{ route('rawmaterialshops.show', ['rawmaterialshop' => $rawmaterial->rawmaterialShops->id]) }}">{{ $rawmaterial->rawmaterialShops->shopeName }}</a></td> --}}
                                 {{-- <th>

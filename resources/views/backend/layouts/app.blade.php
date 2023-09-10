@@ -95,7 +95,9 @@
         <div class="app-main">
             <div class="app-sidebar sidebar-shadow">
                 <div class="app-header__logo">
-                    <div class="logo-src"></div>
+                    <div>
+                        <img width="42" class="img-responsive" src="{{asset('backend/images/laracom.png')}}" alt="">
+                    </div>
                     <div class="header__pane ml-auto">
                         <div>
                             <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
@@ -174,6 +176,15 @@
                                 </a>
                             </li>
                             @endcan
+
+                            @can('warehouseproduct-list')
+                            <li>
+                                <a href="{{route('warehouseproduct.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>Warehouse-Product
+                                </a>
+                            </li>
+                            @endcan
+                            
                             @can('subcategories-list')
                             <li>
                                 <a href="{{route('subcategories.index')}}">
@@ -206,9 +217,25 @@
                             </li>
                             @endcan
 
+                            @can('warehouses-list')
+                            <li>
+                                <a href="{{route('warehouses.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>Warehouse List
+                                </a>
+                            </li>
+                            @endcan
+
                             @can('devisions-list')
                             <li>
                                 <a href="{{route('devisions.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>Devisions List
+                                </a>
+                            </li>
+                            @endcan
+
+                            @can('devisions-devisions')
+                            <li>
+                                <a href="{{route('devisions.devisions')}}">
                                     <i class="metismenu-icon pe-7s-users"></i>Devisions List
                                 </a>
                             </li>
@@ -222,10 +249,26 @@
                             </li>
                             @endcan
 
+                            @can('districts-districts')
+                            <li>
+                                <a href="{{route('districts.districts')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>Districts List
+                                </a>
+                            </li>
+                            @endcan
+
+
                             @can('subdistricts-list')
                             <li>
                                 <a href="{{route('subdistricts.index')}}">
                                     <i class="metismenu-icon pe-7s-users"></i>SubDistricts List
+                                </a>
+                            </li>
+                            @endcan
+                            @can('areas-list')
+                            <li>
+                                <a href="{{route('areas.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>Areas List
                                 </a>
                             </li>
                             @endcan
@@ -253,6 +296,41 @@
             </div>
         </div>
     </div>
+    <style>
+        .scrollbar-sidebar {
+            height: calc(100vh - 70px); /* Adjust the height as needed */
+            overflow-y: auto;
+            border-right: 1px solid #e0e0e0; /* Add a border on the right for separation */
+            background-color: #fff; /* Set the background color */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Add a shadow for visual separation */
+        }
+    
+        .app-sidebar__inner {
+            padding: 20px; /* Add padding for better readability */
+        }
+    
+        .vertical-nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+    
+        .vertical-nav-menu li {
+            padding: 10px 0;
+        }
+    
+        /* Style your menu items as needed */
+        .vertical-nav-menu a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 8px 0;
+        }
+    
+        .vertical-nav-menu a:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
     <form id="delete-form" action="" method="post">
         @csrf
         <input id="method" type="hidden" name="_method" value="DELETE">

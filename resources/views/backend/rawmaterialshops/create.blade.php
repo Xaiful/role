@@ -6,21 +6,21 @@
         <form id="rawMaterialsShopsForm" class="col-md-10 mx-auto" method="post" action="{{route('rawmaterialshops.store')}}">
             @csrf
             <div class="form-group">
-                <label for="name">Category name</label>
+                <label for="name">Shope Name</label>
                 <div>
                     <input type="text" class="form-control"name="shopeName" placeholder="Enter Your Shop" />
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="address">Category name</label>
+                <label for="address">Address</label>
                 <div>
                     <input type="text" class="form-control"name="address" placeholder="Enter Your Shop Address" />
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="phone">Category name</label>
+                <label for="phone">Phone</label>
                 <div>
                     <input type="text" class="form-control"name="phone" placeholder="Enter Your ShopPhone" />
                 </div>

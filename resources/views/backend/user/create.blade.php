@@ -31,29 +31,73 @@
 
             <div class="form-group">
                 <label for="exampleCustomSelect">Select Role</label>
-                <select type="select" id="exampleCustomSelect" name="role" class="custom-select">
+                <select type="select" id="exampleCustomSelect" name="role" class="custom-select" id="roleSelect">
                     <option value="">Select</option>
                     @forelse ($roles as $role)
-                        <option>{{$role->name}}</option>
+                        <option value="{{ $role->name }}" data-areas="{{ json_encode($role->areas) }}">{{ $role->name }}</option>
                     @empty
-                    <option>No Role Found</option>
+                        <option>No Role Found</option>
                     @endforelse
                 </select>
             </div>
-            {{-- <div class="form-group">
-                <label for="firstname">Permissions</label>
-                <div>
-                @forelse($permissions as $permission)
-                <div class="position-relative form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" name="permissions[]" value="{{$permission->id}}"> {{$permission->name}}
-                    </label>
-                </div>
-                @empty
-                    
-                @endforelse
-                </div>
-            </div> --}}
+            
+
+            <!-- Division Selection -->
+
+            <div class="form-group">
+                <label for="devision_id">Select a Devision</label>
+                <select name="devision_id" id="devision_id" class="custom-select">
+                    <option value="">Select a Devision</option>
+                    @foreach ($devisions as $id => $value)
+                        <option value="{{ $id }}" @isset($user) {{ $user->devision->id == $id ? 'selected' : '' }} @endisset>
+                            {{ $value }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            
+            
+            <!-- District Selection -->
+            <div class="form-group">
+                <label for="district_id">Select a District</label>
+                <select name="district_id" id="district_id" class="custom-select">
+                    <option value="">Select a District</option>
+                    @foreach ($districts as $id => $value)
+                        <option value="{{ $id }}" @isset($user) {{ $user->district->id == $id ? 'selected' : '' }} @endisset>
+                            {{ $value }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            
+            
+            
+            <!-- SubDistrict Selection -->
+            <div class="form-group">
+                <label for="sub_district_id">Select a SubDistrict</label>
+                <select name="sub_district_id" id="sub_district_id" class="custom-select">
+                    <option value="">Select a SubDistrict</option>
+                    @foreach ($subDistricts as $id => $value)
+                        <option value="{{ $id }}" @isset($user) {{ $user->subDistrict->id == $id ? 'selected' : '' }} @endisset>
+                            {{ $value }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+             <!--Area Selection -->
+             <div class="form-group">
+                <label for="area_id">Select a SubDistrict</label>
+                <select name="area_id" id="area_id" class="custom-select">
+                    <option value="">Select a Area</option>
+                    @foreach ($areas as $id => $value)
+                        <option value="{{ $id }}" @isset($user) {{ $user->area->id == $id ? 'selected' : '' }} @endisset>
+                            {{ $value }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            
             
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Save</button>
@@ -61,4 +105,41 @@
         </form>
     </div>
 </div>
+
 @endsection
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get references to the selection elements
+        const devisionSelect = document.getElementById('devision_id');
+        const districtSelect = document.getElementById('district_id');
+        const subDistrictSelect = document.getElementById('sub_district_id');
+        const area = document.getElementById('area_id');
+        const roleSelect = document.getElementById('exampleCustomSelect'); // Updated ID
+
+        // Add change event listener to role selection
+        roleSelect.addEventListener('change', function () {
+            const selectedRole = roleSelect.value;
+
+            // Reset all selections
+            devisionSelect.disabled = true;
+            districtSelect.disabled = true;
+            subDistrictSelect.disabled = true;
+            area.disabled = true;
+
+            // Enable/disable selections based on the selected role
+            if (selectedRole === 'RSM') {
+                devisionSelect.disabled = false;
+            } else if (selectedRole === 'ASM') {
+                districtSelect.disabled = false;
+            } else if (selectedRole === 'SPO') {
+                subDistrictSelect.disabled = false;
+            }
+            else if (selectedRole === 'ASPO') {
+                area.disabled = false;
+            }
+        });
+
+        // Trigger the change event to set initial state
+        roleSelect.dispatchEvent(new Event('change'));
+    });
+</script>

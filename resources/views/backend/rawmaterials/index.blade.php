@@ -49,18 +49,12 @@
                                 <td>{{ $rawmaterial->quantity }}</td>
                                 <td>{{ $rawmaterial->unit->name }}</td>
                                 <td>{{ $rawmaterial->unit_price }}</td>
-                                {{-- <td><a href="{{route('rawmaterialshops.show')}}">{{ $rawmaterial->rawmaterialShops->shopeName }}</a></td> --}}
                                 <td>
-                                    @if ($rawmaterial->rawmaterialShops)
-                                        <a href="{{ route('rawmaterialshops.show', ['rawmaterialshop' => $rawmaterial->rawmaterialShops->id]) }}">
-                                            {{ $rawmaterial->rawmaterialShops->shopeName }}
-                                        </a>
-                                    @else
-                                        N/A <!-- Display a message if the relationship is null -->
-                                    @endif
+                                  @foreach($rawmaterial->rawmaterialShops as $rawmaterialShop)
+                                    {{ $rawmaterialShop->shopeName }}
+                                  @endforeach
+                                    <a href="{{ route('rawmaterialShop.list', $rawmaterial) }}">{{ $rawmaterial->shopeName }}</a>
                                 </td>
-                                
-
                                 @php
                                     $total = $rawmaterial->unit_price * $rawmaterial->quantity;
                                     $totalOfTotals += $total; // Add the current total to the total of totals

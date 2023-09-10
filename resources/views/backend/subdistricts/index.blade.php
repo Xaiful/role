@@ -16,17 +16,24 @@
                 <tr>
                     <th>SL</th>
                     <th>Name</th>
+                    <th>User</th>
                     
                 </tr>
                 </thead>
                 <tbody>
                     @forelse ($subDistricts as $subDistrict)
                     <tr>
-                        <td>{{$subDistrict->iteration}}</td>
+                        <td>{{$loop->index+1}}</td>
                         <td>{{$subDistrict->name}}</td>
+                        
                         <td>
-                            <a class="mb-2 mr-2 btn-transition btn btn-outline-success" href="{{route('subdistricts.edit',$district->id)}}">Edit</a>
-                            <a class="delete-row mb-2 mr-2 btn-transition btn btn-outline-danger" href="{{route('subdistricts.destroy',$district->id)}}">Delete</a>
+                            @foreach($subDistrict->users as $user)
+                                {{ $user->name }}
+                            @endforeach
+                        </td>
+                        <td>
+                            <a class="mb-2 mr-2 btn-transition btn btn-outline-success" href="{{route('subdistricts.edit',$subDistrict->id)}}">Edit</a>
+                            <a class="delete-row mb-2 mr-2 btn-transition btn btn-outline-danger" href="{{route('subdistricts.destroy',$subDistrict->id)}}">Delete</a>
                         </td>
                     </tr>
                     @empty

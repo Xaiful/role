@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDistrictRequest;
-use App\Http\Requests\UpdateDistrictRequest;
+use App\Models\User;
 use App\Models\Devision;
 use App\Models\District;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreDistrictRequest;
+use App\Http\Requests\UpdateDistrictRequest;
 
 class DistrictController extends Controller
 {   
@@ -13,6 +15,7 @@ class DistrictController extends Controller
     {
          $this->middleware('permission:districts-list', ['only' => ['index','show']]);
          $this->middleware('permission:districts-create', ['only' => ['create','store']]);
+         $this->middleware('permission:districts-subdistricts', ['only' => ['showDistrictsSubDistricts','show']]);
          $this->middleware('permission:districts-edit', ['only' => ['edit','update']]);
          $this->middleware('permission:districts-delete', ['only' => ['destroy']]);
     }
@@ -23,10 +26,24 @@ class DistrictController extends Controller
      */
     public function index()
     {
-        $data['districts'] = District::get();
+        $data['districts'] = District::whereIn('id', function ($query) {
+            $query->select('district_id')
+                ->from('roles_devisions')
+                ->whereIn('user_id', [Auth::user()->id]);
+                
+        })->get();
+        
+        $data['user'] = Auth::user();
         return view('backend.districts.index', $data);
     }
 
+
+    public function district()
+    {
+        $data['districts'] = District::all();
+        return view('backend.districts.districts',$data);
+
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -50,9 +67,11 @@ class DistrictController extends Controller
             'name' => $request->input('name'),
             'devision_id' => $request->input('devision_id')
         ]);
+        // $district = District::find($districtId);
+        // $devision = $district->devision;
     //dd($subcategory);
         if(!empty($district)){
-            return redirect()->route('districts.index')->with('success' ,'Your District has been added');
+            return redirect()->route('districts.districts')->with('success' ,'Your District has been added');
             }
             return redirect()->back()->withInput();
     }
@@ -63,9 +82,11 @@ class DistrictController extends Controller
      * @param  \App\Models\District  $district
      * @return \Illuminate\Http\Response
      */
-    public function show(District $district)
+    public function showSubDistrict(District $district)
     {
-        //
+        $subDistricts = $district->subDistricts;
+        $users = User::all();
+        return view('backend.districts.subdistricts', compact('district', 'subDistricts','users'));
     }
 
     /**

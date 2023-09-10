@@ -23,7 +23,7 @@
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
-            
+            </div>
 
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Save</button>

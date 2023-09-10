@@ -18,7 +18,7 @@ class CreateRawMaterialsStocksTable extends Migration
             $table->foreignId('rawmaterial_id')->constrained('raw_materials');
             $table->float('quantity')->default(0);
             $table->foreignId('unit_id')->constrained('units');
-            $table->integer('unit_price');
+            $table->float('unit_price');
             $table->integer('memo_no');
             $table->integer('total')->nullable();
             $table->timestamps();

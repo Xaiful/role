@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNsmsTable extends Migration
+class CreateWarehousesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateNsmsTable extends Migration
      */
     public function up()
     {
-        Schema::create('nsms', function (Blueprint $table) {
+        Schema::create('warehouses', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('location');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateNsmsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nsms');
+        Schema::dropIfExists('warehouses');
     }
 }
