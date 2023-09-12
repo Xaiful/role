@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\VisitType;
 use App\Models\Subcategory;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AreaController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DevisionController;
 use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\VisitTypeController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\SubcategoryController;
@@ -61,12 +63,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::get('/products/send', [ProductController::class, 'send'])->name('products.send');
     Route::post('/products/send-to-warehouse', [ProductController::class, 'sendToWarehouse'])->name('products.sendToWarehouse');
-    // Route::put('/warehouses/{warehouse}/products/{product}/update-quantity', [ProductController::class, 'updateQuantity'])->name('products.updateQuantity');
-    
-
-    // Route::get('/products/confirmation', [ProductController::class, 'confirmSend'])->name('products.confirmSend');
-    // Route::post('/products/editQuantity/{product}', [ProductController::class, 'editQuantity'])->name('products.editQuantity');
-
 
     Route::resource('devisions',DevisionController::class);
     Route::get('/devision', [DevisionController::class,'devision'])->name('devisions.devisions');
@@ -80,14 +76,11 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('warehouses',WarehouseController::class);
     Route::get('/warehouses/{warehouse}/', [WarehouseController::class,'show'])->name('warehouse.list');
     Route::put('/warehouses/update_quantity/{warehouse}/', [WarehouseController::class,'update_quantity'])->name('warehouse.updateQuantity');
-    // Route::get('/warehouses/{warehouse}/products/{product}/edit', [WarehouseController::class,'editQuantity'])->name('products.editQuantity');
-    // Route::put('/warehouses/{warehouse}/products/{product}/update-quantity', [WarehouseController::class, 'updateQuantity'])->name('products.updateQuantity');
-    // Route::put('/warehouses/{warehouse}/products/{product}/update-quantity', [WarehouseController::class, 'updateProduct'])->name('products.update');
-    // Route::put('/warehouses/{warehouse}/products/{product}', [WarehouseController::class, 'update'])->name('warehouses.update');
     Route::get('/edit-warehouse-product/{id}', 'WarehouseController@editProductQuantity')->name('warehouse.editProductQuantity');
     Route::get('/warehouseproduct', [WarehouseProductController::class,'index'])->name('warehouseproduct.index');
 
 
 
     Route::resource('areas',AreaController::class);
+    Route::resource('visitTypes',VisitTypeController::class);
 });

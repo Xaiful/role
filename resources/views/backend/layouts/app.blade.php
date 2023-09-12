@@ -272,6 +272,11 @@
                                 </a>
                             </li>
                             @endcan
+                            <li>
+                                <a href="{{route('visitTypes.index')}}">
+                                    <i class="metismenu-icon pe-7s-users"></i>Visit Type List
+                                </a>
+                            </li>
                             
                         </ul>
                     </div>

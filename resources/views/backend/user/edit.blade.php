@@ -29,7 +29,18 @@
                     @endforeach
                 </select>
             </div>
-        z
+
+            <div class="form-group">
+                <label for="exampleCustomSelect">Select Role</label>
+                <select type="select" id="" class="form-control"  name="devision_id">
+                    <option value="" hidden>{{ $rolesDevision->devision->name }}</option>
+                    @foreach ($devisions as $devision)
+                        <option value="{{ $devision->id }}">{{ $devision->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+        
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Save</button>
             </div>

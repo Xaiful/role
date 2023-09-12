@@ -84,6 +84,7 @@ return array(
     'App\\Models\\Subcategory' => $baseDir . '/app/Models/Subcategory.php',
     'App\\Models\\Unit' => $baseDir . '/app/Models/Unit.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
+    'App\\Models\\VisitType' => $baseDir . '/app/Models/VisitType.php',
     'App\\Models\\Warehouse' => $baseDir . '/app/Models/Warehouse.php',
     'App\\Models\\WarehouseProduct' => $baseDir . '/app/Models/WarehouseProduct.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',

@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\User;
 use App\Models\Devision;
 use App\Models\District;
+use App\Models\RolesDevision;
 use App\Models\SubDistrict;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -142,6 +143,12 @@ class UserController extends Controller
     {
         $data['user'] = User::where('id',$id)->first();
         $data['roles'] = Role::all();
+        $data['devisions'] = Devision::get();
+        $data['rolesDevision'] = RolesDevision::select('*')->where('user_id',$id)->first();
+        $data['districts'] = District::pluck('name','id');
+        $data['subDistricts'] = SubDistrict::pluck('name','id');
+        $data['areas'] = Area::pluck('name','id');
+        $data['permissions'] = Permission::all();
         return view('backend.user.edit',$data);
     }
 
@@ -158,6 +165,10 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,'.$id
         ]);
+
+        $rolesDevision = RolesDevision::where('user_id',$id)->first();
+        $rolesDevision->devision_id = $request->devision_id;
+        $rolesDevision->update();
 
         $user = User::where('id',$id)->first();
         $user->name = $request->name;
